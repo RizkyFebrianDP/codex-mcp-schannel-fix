@@ -93,18 +93,18 @@ If you use an AI coding assistant (such as Antigravity, Claude Code, Cursor, or 
 ````markdown
 > **Prompt Template: Apply Windows Schannel MCP Bridge Workaround**
 >
-> "Saya menggunakan Codex CLI di Windows dan mengalami error koneksi remote MCP server:
-> `CRYPT_E_REVOKED — sertifikat dicabut` karena penolakan Windows Schannel TLS.
+> "I am running Codex CLI on Windows and encountering a remote MCP connection error:
+> `CRYPT_E_REVOKED — certificate is revoked` caused by Windows Schannel TLS verification.
 >
-> Tolong bantu perbaiki konfigurasi `~/.codex/config.toml` saya dengan metode Node.js stdio bridge (`mcp-remote`):
+> Please help fix my `~/.codex/config.toml` configuration by converting the remote MCP server to use a local Node.js stdio bridge (`mcp-remote`):
 >
-> 1. Periksa bagian server remote MCP saya di `config.toml` (yang saat ini menggunakan direct `url = "https://..."`).
-> 2. Ubah konfigurasinya menjadi bridge stdio menggunakan Node.js dan `mcp-remote` (misal dari runtime yang sudah ada di `.codex/mcp-runtimes/` atau global Node).
-> 3. Pindahkan token otorisasi ke argumen `--header "Authorization: Bearer <TOKEN>"`.
-> 4. Tambahkan environment variable `NODE_TLS_REJECT_UNAUTHORIZED = "0"` pada blok `env` server terkait agar OpenSSL di Node.js tidak memutus koneksi.
-> 5. Pastikan format path Windows di-escape dengan benar (double backslash `\\`).
+> 1. Inspect my remote MCP server configuration in `~/.codex/config.toml` (which currently uses a direct `url = "https://..."`).
+> 2. Convert its configuration into a stdio bridge using Node.js and `mcp-remote` (e.g., using an existing runtime path under `.codex/mcp-runtimes/` or globally installed Node/mcp-remote).
+> 3. Migrate the authorization bearer token into the `--header "Authorization: Bearer <TOKEN>"` CLI argument.
+> 4. Add the environment variable `NODE_TLS_REJECT_UNAUTHORIZED = "0"` under the server's `env` table to prevent Node.js OpenSSL from rejecting the certificate.
+> 5. Ensure all Windows file paths are correctly escaped using double backslashes (`\\`).
 >
-> Lakukan update konfigurasi secara aman tanpa mengubah kredensial server lainnya."
+> Please apply this update safely without modifying any unrelated server configurations or credentials."
 ````
 
 ---

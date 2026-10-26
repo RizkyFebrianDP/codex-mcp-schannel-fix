@@ -11,7 +11,7 @@ When configuring a remote MCP server in Codex CLI (`~/.codex/config.toml`) using
 ```toml
 [mcp_servers.my_remote_server]
 enabled = true
-url = "https://mcp.internal-company.com/v1/gateway/mcp-sap"
+url = "https://mcp.internal-company.com/v1/gateway/mcp-server"
 
 [mcp_servers.my_remote_server.http_headers]
 Authorization = "Bearer <token>"
@@ -20,8 +20,8 @@ Authorization = "Bearer <token>"
 On Windows, Codex CLI's native TLS stack fails to establish a TLS handshake and terminates the connection with:
 
 ```text
-Koneksi TLS masih ditolak Windows Schannel: CRYPT_E_REVOKED — sertifikat dicabut.
-Tool MCP native belum muncul di sesi ini.
+TLS connection rejected by Windows Schannel: CRYPT_E_REVOKED — certificate is revoked.
+Native MCP tools do not appear in this session.
 ```
 
 ### Why this happens:
@@ -51,7 +51,7 @@ Node.js uses the **OpenSSL** engine (which does not depend on Windows Schannel C
         │
      (HTTPS)
         ▼
-[Remote MCP Gateway] (e.g., SAP / RAG / Internal Enterprise Services)
+[Remote MCP Gateway] (e.g., Enterprise Services / Microservices)
 ```
 
 ---
@@ -63,18 +63,18 @@ Edit your Codex configuration file at `~/.codex/config.toml` (typically located 
 Replace direct `url` configurations with the following bridge structure:
 
 ```toml
-[mcp_servers.sap-trias]
+[mcp_servers.enterprise-mcp]
 command = "C:\\Program Files\\nodejs\\node.exe"
 args = [
-  "C:\\Users\\<Username>\\.codex\\mcp-runtimes\\cloudflare\\node_modules\\mcp-remote\\dist\\proxy.js",
-  "https://mcp.internal-company.com/v1/gateway/mcp-sap",
+  "C:\\Users\\<Username>\\.codex\\mcp-runtimes\\common\\node_modules\\mcp-remote\\dist\\proxy.js",
+  "https://mcp.internal-company.com/v1/gateway/mcp-server",
   "--header",
   "Authorization: Bearer <YOUR_ACCESS_TOKEN>"
 ]
 enabled = true
 startup_timeout_sec = 60
 
-[mcp_servers.sap-trias.env]
+[mcp_servers.enterprise-mcp.env]
 NODE_TLS_REJECT_UNAUTHORIZED = "0"
 ```
 
@@ -93,7 +93,7 @@ If you encounter:
 dial tcp: lookup <hostname>: no such host
 curl: (6) Could not resolve host
 ```
-followed by a VPN client error (e.g., **Sophos Connect**):
+followed by a VPN client error (e.g., OpenVPN / SSL-VPN client):
 ```text
 SSL VPN error: All tap-windows6 adapters on this system are currently in use or disabled.
 ```
@@ -111,17 +111,14 @@ SSL VPN error: All tap-windows6 adapters on this system are currently in use or 
 
 Once applied, launch Codex CLI and execute:
 ```text
-cek koneksi mcp sap trias
+check mcp connection
 ```
 
 **Expected output:**
 ```text
-Koneksi MCP SAP Trias berhasil. Panggilan RFC_SYSTEM_INFO mendapat respons langsung dari SAP.
-- Server aktif: Sandbox Build Competence
-- SID: TRD
+MCP connection successful. Connected to remote gateway.
 - Mode: LIVE
-- SAP Release: 731
-- Database / OS: Oracle / Linux
+- Target Service: Online
 ```
 
 ---

@@ -86,7 +86,30 @@ NODE_TLS_REJECT_UNAUTHORIZED = "0"
 
 ---
 
-## 4. Supplementary Troubleshooting: Enterprise VPN & TAP Adapter
+## 4. Prompt Template for AI Assistants
+
+If you use an AI coding assistant (such as Antigravity, Claude Code, Cursor, or ChatGPT) and want it to inspect and apply this workaround to your machine automatically, you can copy-paste the prompt template below:
+
+````markdown
+> **Prompt Template: Apply Windows Schannel MCP Bridge Workaround**
+>
+> "Saya menggunakan Codex CLI di Windows dan mengalami error koneksi remote MCP server:
+> `CRYPT_E_REVOKED — sertifikat dicabut` karena penolakan Windows Schannel TLS.
+>
+> Tolong bantu perbaiki konfigurasi `~/.codex/config.toml` saya dengan metode Node.js stdio bridge (`mcp-remote`):
+>
+> 1. Periksa bagian server remote MCP saya di `config.toml` (yang saat ini menggunakan direct `url = "https://..."`).
+> 2. Ubah konfigurasinya menjadi bridge stdio menggunakan Node.js dan `mcp-remote` (misal dari runtime yang sudah ada di `.codex/mcp-runtimes/` atau global Node).
+> 3. Pindahkan token otorisasi ke argumen `--header "Authorization: Bearer <TOKEN>"`.
+> 4. Tambahkan environment variable `NODE_TLS_REJECT_UNAUTHORIZED = "0"` pada blok `env` server terkait agar OpenSSL di Node.js tidak memutus koneksi.
+> 5. Pastikan format path Windows di-escape dengan benar (double backslash `\\`).
+>
+> Lakukan update konfigurasi secara aman tanpa mengubah kredensial server lainnya."
+````
+
+---
+
+## 5. Supplementary Troubleshooting: Enterprise VPN & TAP Adapter
 
 If you encounter:
 ```text
@@ -107,7 +130,7 @@ SSL VPN error: All tap-windows6 adapters on this system are currently in use or 
 
 ---
 
-## 5. Verification
+## 6. Verification
 
 Once applied, launch Codex CLI and execute:
 ```text

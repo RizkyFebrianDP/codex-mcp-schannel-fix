@@ -1,0 +1,15 @@
+# Secrets & Tokens
+*.env
+*.env.local
+token.txt
+auth-headers.txt
+
+# Node
+node_modules/
+npm-debug.log
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,0 +1,31 @@
+# Example configuration for ~/.codex/config.toml
+# Workaround for Windows Schannel TLS issues with remote MCP servers
+
+[mcp_servers.sap-trias]
+command = "C:\\Program Files\\nodejs\\node.exe"
+args = [
+  "C:\\Users\\<Username>\\.codex\\mcp-runtimes\\cloudflare\\node_modules\\mcp-remote\\dist\\proxy.js",
+  "https://mcp.trias-sentosa.com/v1/gateway/mcp-sap",
+  "--header",
+  "Authorization: Bearer <YOUR_BEARER_TOKEN>"
+]
+enabled = true
+startup_timeout_sec = 60
+
+[mcp_servers.sap-trias.env]
+NODE_TLS_REJECT_UNAUTHORIZED = "0"
+
+# Optional: RAG & Email Services can be bridged similarly
+# [mcp_servers.rag-trias]
+# command = "C:\\Program Files\\nodejs\\node.exe"
+# args = [
+#   "C:\\Users\\<Username>\\.codex\\mcp-runtimes\\cloudflare\\node_modules\\mcp-remote\\dist\\proxy.js",
+#   "https://mcp.trias-sentosa.com/v1/gateway/mcp-rag",
+#   "--header",
+#   "Authorization: Bearer <YOUR_BEARER_TOKEN>"
+# ]
+# enabled = true
+# startup_timeout_sec = 60
+#
+# [mcp_servers.rag-trias.env]
+# NODE_TLS_REJECT_UNAUTHORIZED = "0"
